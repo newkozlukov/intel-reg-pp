@@ -214,8 +214,8 @@ function MSR_OUTPUT__displayAsPrettyPrint()
       then
         echo ""
         echo ""
-        echo "./intel-reg-pp.out -a ${g_arr_MsrAddr[index]} ${l_var_reg_val}"
-        ./intel-reg-pp.out -a "${g_arr_MsrAddr[index]}" "${l_var_reg_val}"
+        echo "intel-reg-pp.out -a ${g_arr_MsrAddr[index]} ${l_var_reg_val}"
+        intel-reg-pp.out -a "${g_arr_MsrAddr[index]}" "${l_var_reg_val}"
       fi
     done
   done

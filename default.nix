@@ -3,7 +3,10 @@
 with nixpkgs;
 
 rec {
-  intel-reg-pp = stdenv.mkDerivation {
+
+  intel-reg-pp = let
+    sh = writeScript "msr_output.sh" (builtins.readFile ./intel-reg-pp/msr_output.sh);
+  in stdenv.mkDerivation {
     name = "intel-reg-pp";
     src = ./intel-reg-pp;
     buildPhase = ''
@@ -15,27 +18,11 @@ rec {
         -I. \
         -O3 \
         -o intel-reg-pp.out
-      '';
+    '';
     installPhase = ''
       mkdir -p $out/bin
-      install intel-reg-pp $out/bin/intel-reg-pp
-      '';
+      install intel-reg-pp.out $out/bin/intel-reg-pp.out
+      install ${sh} $out/bin/msr_output.sh
+    '';
   };
-  msr_output =
-    let
-      sh = writeScript "msr_output.sh" (builtins.readFile ./intel-reg-pp/msr_output.sh);
-    in stdenv.mkDerivation {
-      name = "msr_output.sh";
-      buildInputs = [intel-reg-pp];
-      src = [];
-      unpackPhase = ''
-        echo no-op
-        '';
-      buildPhase = ''
-        echo no-op
-      '';
-      installPhase = ''
-        install ${sh} $out
-      '';
-    };
 }
