@@ -11,9 +11,15 @@
       intel-reg-pp = default.intel-reg-pp;
     };
     defaultPackage.${system} = default.intel-reg-pp;
-    apps.${system}.msr-output = {
-      type = "app";
-      program = "${packages.${system}.intel-reg-pp}/bin/msr_output.sh";
+    apps.${system} = {
+      intel-reg-pp = {
+        type = "app";
+        program = "${defaultPackage.${system}}/bin/intel-reg-pp.out";
+      };
+      msr-output = {
+        type = "app";
+        program = "${defaultPackage.${system}}/bin/msr_output.sh";
+      };
     };
     defaultApp.${system} = apps.${system}.msr-output;
   };
